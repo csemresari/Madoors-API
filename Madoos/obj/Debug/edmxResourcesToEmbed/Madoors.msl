@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="madoors_ModelStoreContainer" CdmEntityContainer="PersistencyManager">
+    <EntitySetMapping Name="BRANCH">
+      <EntityTypeMapping TypeName="madoors_Model.BRANCH">
+        <MappingFragment StoreEntitySet="BRANCH">
+          <ScalarProperty Name="branchName" ColumnName="branchName" />
+          <ScalarProperty Name="branchID" ColumnName="branchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEVELOPER">
+      <EntityTypeMapping TypeName="madoors_Model.DEVELOPER">
+        <MappingFragment StoreEntitySet="DEVELOPER">
+          <ScalarProperty Name="developerName" ColumnName="developerName" />
+          <ScalarProperty Name="developerID" ColumnName="developerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOGIN">
+      <EntityTypeMapping TypeName="madoors_Model.LOGIN">
+        <MappingFragment StoreEntitySet="LOGIN">
+          <ScalarProperty Name="deviceKey" ColumnName="deviceKey" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+          <ScalarProperty Name="loginID" ColumnName="loginID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TOKEN">
+      <EntityTypeMapping TypeName="madoors_Model.TOKEN">
+        <MappingFragment StoreEntitySet="TOKEN">
+          <ScalarProperty Name="tokenGenerationTime" ColumnName="tokenGenerationTime" />
+          <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+          <ScalarProperty Name="tokenID" ColumnName="tokenID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARPASS">
+      <EntityTypeMapping TypeName="madoors_Model.CARPASS">
+        <MappingFragment StoreEntitySet="CARPASS">
+          <ScalarProperty Name="dbCreationTime" ColumnName="dbCreationTime" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="plateNo" ColumnName="plateNo" />
+          <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+          <ScalarProperty Name="carPassID" ColumnName="carPassID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ENTRANCE">
+      <EntityTypeMapping TypeName="madoors_Model.ENTRANCE">
+        <MappingFragment StoreEntitySet="ENTRANCE">
+          <ScalarProperty Name="entranceName" ColumnName="entranceName" />
+          <ScalarProperty Name="branchID" ColumnName="branchID" />
+          <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MadoosDB_ModelStoreContainer" CdmEntityContainer="MadoosDB_Entities">
+    <EntitySetMapping Name="CARPASS">
+      <EntityTypeMapping TypeName="MadoosDB_Model.CARPASS">
+        <MappingFragment StoreEntitySet="CARPASS">
+          <ScalarProperty Name="tokenID" ColumnName="tokenID" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="plateNo" ColumnName="plateNo" />
+          <ScalarProperty Name="carPassID" ColumnName="carPassID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TOKEN">
+      <EntityTypeMapping TypeName="MadoosDB_Model.TOKEN">
+        <MappingFragment StoreEntitySet="TOKEN">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="tokenID" ColumnName="tokenID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

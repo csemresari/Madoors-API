@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="madoors_Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="madoors_ModelStoreContainer">
+    <EntitySet Name="BRANCH" EntityType="madoors_Model.Store.BRANCH" store:Type="Tables" Schema="madoors" />
+    <EntitySet Name="CARPASS" EntityType="madoors_Model.Store.CARPASS" store:Type="Tables" Schema="madoors" />
+    <EntitySet Name="DEVELOPER" EntityType="madoors_Model.Store.DEVELOPER" store:Type="Tables" Schema="madoors" />
+    <EntitySet Name="ENTRANCE" EntityType="madoors_Model.Store.ENTRANCE" store:Type="Tables" Schema="madoors" />
+    <EntitySet Name="LOGIN" EntityType="madoors_Model.Store.LOGIN" store:Type="Tables" Schema="madoors" />
+    <EntitySet Name="TOKEN" EntityType="madoors_Model.Store.TOKEN" store:Type="Tables" Schema="madoors" />
+    <AssociationSet Name="FK_CARPASS_ENTRANCE" Association="madoors_Model.Store.FK_CARPASS_ENTRANCE">
+      <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+      <End Role="CARPASS" EntitySet="CARPASS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ENTRANCE_BRANCH" Association="madoors_Model.Store.FK_ENTRANCE_BRANCH">
+      <End Role="BRANCH" EntitySet="BRANCH" />
+      <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOGIN_ENTRANCE" Association="madoors_Model.Store.FK_LOGIN_ENTRANCE">
+      <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+      <End Role="LOGIN" EntitySet="LOGIN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TOKEN_ENTRANCE" Association="madoors_Model.Store.FK_TOKEN_ENTRANCE">
+      <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+      <End Role="TOKEN" EntitySet="TOKEN" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BRANCH">
+    <Key>
+      <PropertyRef Name="branchID" />
+    </Key>
+    <Property Name="branchID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="branchName" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="CARPASS">
+    <Key>
+      <PropertyRef Name="carPassID" />
+    </Key>
+    <Property Name="carPassID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="entranceID" Type="uniqueidentifier" />
+    <Property Name="plateNo" Type="nvarchar" MaxLength="255" />
+    <Property Name="state" Type="int" />
+    <Property Name="time" Type="varchar" MaxLength="255" />
+    <Property Name="image" Type="image" />
+    <Property Name="dbCreationTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DEVELOPER">
+    <Key>
+      <PropertyRef Name="developerID" />
+    </Key>
+    <Property Name="developerID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="developerName" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="ENTRANCE">
+    <Key>
+      <PropertyRef Name="entranceID" />
+    </Key>
+    <Property Name="entranceID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="branchID" Type="uniqueidentifier" />
+    <Property Name="entranceName" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="LOGIN">
+    <Key>
+      <PropertyRef Name="loginID" />
+    </Key>
+    <Property Name="loginID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="entranceID" Type="uniqueidentifier" />
+    <Property Name="username" Type="varchar" MaxLength="255" />
+    <Property Name="password" Type="varchar" MaxLength="255" />
+    <Property Name="deviceKey" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TOKEN">
+    <Key>
+      <PropertyRef Name="tokenID" />
+    </Key>
+    <Property Name="tokenID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="entranceID" Type="uniqueidentifier" />
+    <Property Name="tokenGenerationTime" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_CARPASS_ENTRANCE">
+    <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CARPASS" Type="madoors_Model.Store.CARPASS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ENTRANCE">
+        <PropertyRef Name="entranceID" />
+      </Principal>
+      <Dependent Role="CARPASS">
+        <PropertyRef Name="entranceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ENTRANCE_BRANCH">
+    <End Role="BRANCH" Type="madoors_Model.Store.BRANCH" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BRANCH">
+        <PropertyRef Name="branchID" />
+      </Principal>
+      <Dependent Role="ENTRANCE">
+        <PropertyRef Name="branchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOGIN_ENTRANCE">
+    <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LOGIN" Type="madoors_Model.Store.LOGIN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ENTRANCE">
+        <PropertyRef Name="entranceID" />
+      </Principal>
+      <Dependent Role="LOGIN">
+        <PropertyRef Name="entranceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TOKEN_ENTRANCE">
+    <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TOKEN" Type="madoors_Model.Store.TOKEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ENTRANCE">
+        <PropertyRef Name="entranceID" />
+      </Principal>
+      <Dependent Role="TOKEN">
+        <PropertyRef Name="entranceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

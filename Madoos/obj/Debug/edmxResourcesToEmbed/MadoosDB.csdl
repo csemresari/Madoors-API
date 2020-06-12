@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MadoosDB_Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="MadoosDB_Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CARPASS" EntityType="MadoosDB_Model.CARPASS" />
+    <EntitySet Name="TOKEN" EntityType="MadoosDB_Model.TOKEN" />
+    <AssociationSet Name="FK_CARPASS_TOKEN" Association="MadoosDB_Model.FK_CARPASS_TOKEN">
+      <End Role="TOKEN" EntitySet="TOKEN" />
+      <End Role="CARPASS" EntitySet="CARPASS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CARPASS">
+    <Key>
+      <PropertyRef Name="carPassID" />
+    </Key>
+    <Property Type="Guid" Name="carPassID" Nullable="false" />
+    <Property Type="String" Name="plateNo" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="state" />
+    <Property Type="DateTime" Name="time" />
+    <Property Type="Binary" Name="image" MaxLength="255" FixedLength="false" />
+    <Property Type="Guid" Name="tokenID" Nullable="false" />
+    <NavigationProperty Name="TOKEN" Relationship="MadoosDB_Model.FK_CARPASS_TOKEN" FromRole="CARPASS" ToRole="TOKEN" />
+  </EntityType>
+  <EntityType Name="TOKEN">
+    <Key>
+      <PropertyRef Name="tokenID" />
+    </Key>
+    <Property Type="Guid" Name="tokenID" Nullable="false" />
+    <Property Type="Guid" Name="userID" Nullable="false" />
+    <NavigationProperty Name="CARPASS" Relationship="MadoosDB_Model.FK_CARPASS_TOKEN" FromRole="TOKEN" ToRole="CARPASS" />
+  </EntityType>
+  <Association Name="FK_CARPASS_TOKEN">
+    <End Type="MadoosDB_Model.TOKEN" Role="TOKEN" Multiplicity="1" />
+    <End Type="MadoosDB_Model.CARPASS" Role="CARPASS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TOKEN">
+        <PropertyRef Name="tokenID" />
+      </Principal>
+      <Dependent Role="CARPASS">
+        <PropertyRef Name="tokenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="madoors_Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="madoors_ModelStoreContainer">
+          <EntitySet Name="BRANCH" EntityType="madoors_Model.Store.BRANCH" store:Type="Tables" Schema="madoors" />
+          <EntitySet Name="CARPASS" EntityType="madoors_Model.Store.CARPASS" store:Type="Tables" Schema="madoors" />
+          <EntitySet Name="DEVELOPER" EntityType="madoors_Model.Store.DEVELOPER" store:Type="Tables" Schema="madoors" />
+          <EntitySet Name="ENTRANCE" EntityType="madoors_Model.Store.ENTRANCE" store:Type="Tables" Schema="madoors" />
+          <EntitySet Name="LOGIN" EntityType="madoors_Model.Store.LOGIN" store:Type="Tables" Schema="madoors" />
+          <EntitySet Name="TOKEN" EntityType="madoors_Model.Store.TOKEN" store:Type="Tables" Schema="madoors" />
+          <AssociationSet Name="FK_CARPASS_ENTRANCE" Association="madoors_Model.Store.FK_CARPASS_ENTRANCE">
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+            <End Role="CARPASS" EntitySet="CARPASS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRANCE_BRANCH" Association="madoors_Model.Store.FK_ENTRANCE_BRANCH">
+            <End Role="BRANCH" EntitySet="BRANCH" />
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOGIN_ENTRANCE" Association="madoors_Model.Store.FK_LOGIN_ENTRANCE">
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+            <End Role="LOGIN" EntitySet="LOGIN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TOKEN_ENTRANCE" Association="madoors_Model.Store.FK_TOKEN_ENTRANCE">
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+            <End Role="TOKEN" EntitySet="TOKEN" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BRANCH">
+          <Key>
+            <PropertyRef Name="branchID" />
+          </Key>
+          <Property Name="branchID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="branchName" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CARPASS">
+          <Key>
+            <PropertyRef Name="carPassID" />
+          </Key>
+          <Property Name="carPassID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="entranceID" Type="uniqueidentifier" />
+          <Property Name="plateNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="state" Type="int" />
+          <Property Name="time" Type="varchar" MaxLength="255" />
+          <Property Name="image" Type="image" />
+          <Property Name="dbCreationTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DEVELOPER">
+          <Key>
+            <PropertyRef Name="developerID" />
+          </Key>
+          <Property Name="developerID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="developerName" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ENTRANCE">
+          <Key>
+            <PropertyRef Name="entranceID" />
+          </Key>
+          <Property Name="entranceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="branchID" Type="uniqueidentifier" />
+          <Property Name="entranceName" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="LOGIN">
+          <Key>
+            <PropertyRef Name="loginID" />
+          </Key>
+          <Property Name="loginID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="entranceID" Type="uniqueidentifier" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="deviceKey" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="TOKEN">
+          <Key>
+            <PropertyRef Name="tokenID" />
+          </Key>
+          <Property Name="tokenID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="entranceID" Type="uniqueidentifier" />
+          <Property Name="tokenGenerationTime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_CARPASS_ENTRANCE">
+          <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CARPASS" Type="madoors_Model.Store.CARPASS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRANCE">
+              <PropertyRef Name="entranceID" />
+            </Principal>
+            <Dependent Role="CARPASS">
+              <PropertyRef Name="entranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRANCE_BRANCH">
+          <End Role="BRANCH" Type="madoors_Model.Store.BRANCH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCH">
+              <PropertyRef Name="branchID" />
+            </Principal>
+            <Dependent Role="ENTRANCE">
+              <PropertyRef Name="branchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOGIN_ENTRANCE">
+          <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LOGIN" Type="madoors_Model.Store.LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRANCE">
+              <PropertyRef Name="entranceID" />
+            </Principal>
+            <Dependent Role="LOGIN">
+              <PropertyRef Name="entranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TOKEN_ENTRANCE">
+          <End Role="ENTRANCE" Type="madoors_Model.Store.ENTRANCE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TOKEN" Type="madoors_Model.Store.TOKEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRANCE">
+              <PropertyRef Name="entranceID" />
+            </Principal>
+            <Dependent Role="TOKEN">
+              <PropertyRef Name="entranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="madoors_Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="PersistencyManager" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BRANCH" EntityType="madoors_Model.BRANCH" />
+          <EntitySet Name="DEVELOPER" EntityType="madoors_Model.DEVELOPER" />
+          <EntitySet Name="LOGIN" EntityType="madoors_Model.LOGIN" />
+          <EntitySet Name="TOKEN" EntityType="madoors_Model.TOKEN" />
+          <EntitySet Name="CARPASS" EntityType="madoors_Model.CARPASS" />
+          <EntitySet Name="ENTRANCE" EntityType="madoors_Model.ENTRANCE" />
+          <AssociationSet Name="FK_ENTRANCE_BRANCH" Association="madoors_Model.FK_ENTRANCE_BRANCH">
+            <End Role="BRANCH" EntitySet="BRANCH" />
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOGIN_ENTRANCE" Association="madoors_Model.FK_LOGIN_ENTRANCE">
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+            <End Role="LOGIN" EntitySet="LOGIN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TOKEN_ENTRANCE" Association="madoors_Model.FK_TOKEN_ENTRANCE">
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+            <End Role="TOKEN" EntitySet="TOKEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARPASS_ENTRANCE" Association="madoors_Model.FK_CARPASS_ENTRANCE">
+            <End Role="ENTRANCE" EntitySet="ENTRANCE" />
+            <End Role="CARPASS" EntitySet="CARPASS" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="BRANCH">
+          <Key>
+            <PropertyRef Name="branchID" />
+          </Key>
+          <Property Type="Guid" Name="branchID" Nullable="false" />
+          <Property Type="String" Name="branchName" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ENTRANCE" Relationship="madoors_Model.FK_ENTRANCE_BRANCH" FromRole="BRANCH" ToRole="ENTRANCE" />
+        </EntityType>
+        <EntityType Name="DEVELOPER">
+          <Key>
+            <PropertyRef Name="developerID" />
+          </Key>
+          <Property Type="Guid" Name="developerID" Nullable="false" />
+          <Property Type="String" Name="developerName" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LOGIN">
+          <Key>
+            <PropertyRef Name="loginID" />
+          </Key>
+          <Property Type="Guid" Name="loginID" Nullable="false" />
+          <Property Type="Guid" Name="entranceID" />
+          <Property Type="String" Name="username" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="deviceKey" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ENTRANCE" Relationship="madoors_Model.FK_LOGIN_ENTRANCE" FromRole="LOGIN" ToRole="ENTRANCE" />
+        </EntityType>
+        <EntityType Name="TOKEN">
+          <Key>
+            <PropertyRef Name="tokenID" />
+          </Key>
+          <Property Type="Guid" Name="tokenID" Nullable="false" />
+          <Property Type="Guid" Name="entranceID" />
+          <Property Type="DateTime" Name="tokenGenerationTime" />
+          <NavigationProperty Name="ENTRANCE" Relationship="madoors_Model.FK_TOKEN_ENTRANCE" FromRole="TOKEN" ToRole="ENTRANCE" />
+        </EntityType>
+        <EntityType Name="CARPASS">
+          <Key>
+            <PropertyRef Name="carPassID" />
+          </Key>
+          <Property Type="Guid" Name="carPassID" Nullable="false" />
+          <Property Type="Guid" Name="entranceID" />
+          <Property Type="String" Name="plateNo" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="state" />
+          <Property Type="String" Name="time" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Binary" Name="image" MaxLength="Max" FixedLength="false" />
+          <Property Type="DateTime" Name="dbCreationTime" />
+          <NavigationProperty Name="ENTRANCE" Relationship="madoors_Model.FK_CARPASS_ENTRANCE" FromRole="CARPASS" ToRole="ENTRANCE" />
+        </EntityType>
+        <EntityType Name="ENTRANCE">
+          <Key>
+            <PropertyRef Name="entranceID" />
+          </Key>
+          <Property Type="Guid" Name="entranceID" Nullable="false" />
+          <Property Type="Guid" Name="branchID" />
+          <Property Type="String" Name="entranceName" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BRANCH" Relationship="madoors_Model.FK_ENTRANCE_BRANCH" FromRole="ENTRANCE" ToRole="BRANCH" />
+          <NavigationProperty Name="LOGIN" Relationship="madoors_Model.FK_LOGIN_ENTRANCE" FromRole="ENTRANCE" ToRole="LOGIN" />
+          <NavigationProperty Name="TOKEN" Relationship="madoors_Model.FK_TOKEN_ENTRANCE" FromRole="ENTRANCE" ToRole="TOKEN" />
+          <NavigationProperty Name="CARPASS" Relationship="madoors_Model.FK_CARPASS_ENTRANCE" FromRole="ENTRANCE" ToRole="CARPASS" />
+        </EntityType>
+        <Association Name="FK_ENTRANCE_BRANCH">
+          <End Type="madoors_Model.BRANCH" Role="BRANCH" Multiplicity="0..1" />
+          <End Type="madoors_Model.ENTRANCE" Role="ENTRANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCH">
+              <PropertyRef Name="branchID" />
+            </Principal>
+            <Dependent Role="ENTRANCE">
+              <PropertyRef Name="branchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOGIN_ENTRANCE">
+          <End Type="madoors_Model.ENTRANCE" Role="ENTRANCE" Multiplicity="0..1" />
+          <End Type="madoors_Model.LOGIN" Role="LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRANCE">
+              <PropertyRef Name="entranceID" />
+            </Principal>
+            <Dependent Role="LOGIN">
+              <PropertyRef Name="entranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TOKEN_ENTRANCE">
+          <End Type="madoors_Model.ENTRANCE" Role="ENTRANCE" Multiplicity="0..1" />
+          <End Type="madoors_Model.TOKEN" Role="TOKEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRANCE">
+              <PropertyRef Name="entranceID" />
+            </Principal>
+            <Dependent Role="TOKEN">
+              <PropertyRef Name="entranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARPASS_ENTRANCE">
+          <End Type="madoors_Model.ENTRANCE" Role="ENTRANCE" Multiplicity="0..1" />
+          <End Type="madoors_Model.CARPASS" Role="CARPASS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRANCE">
+              <PropertyRef Name="entranceID" />
+            </Principal>
+            <Dependent Role="CARPASS">
+              <PropertyRef Name="entranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="madoors_ModelStoreContainer" CdmEntityContainer="PersistencyManager">
+          <EntitySetMapping Name="BRANCH">
+            <EntityTypeMapping TypeName="madoors_Model.BRANCH">
+              <MappingFragment StoreEntitySet="BRANCH">
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="branchID" ColumnName="branchID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEVELOPER">
+            <EntityTypeMapping TypeName="madoors_Model.DEVELOPER">
+              <MappingFragment StoreEntitySet="DEVELOPER">
+                <ScalarProperty Name="developerName" ColumnName="developerName" />
+                <ScalarProperty Name="developerID" ColumnName="developerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGIN">
+            <EntityTypeMapping TypeName="madoors_Model.LOGIN">
+              <MappingFragment StoreEntitySet="LOGIN">
+                <ScalarProperty Name="deviceKey" ColumnName="deviceKey" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+                <ScalarProperty Name="loginID" ColumnName="loginID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TOKEN">
+            <EntityTypeMapping TypeName="madoors_Model.TOKEN">
+              <MappingFragment StoreEntitySet="TOKEN">
+                <ScalarProperty Name="tokenGenerationTime" ColumnName="tokenGenerationTime" />
+                <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+                <ScalarProperty Name="tokenID" ColumnName="tokenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARPASS">
+            <EntityTypeMapping TypeName="madoors_Model.CARPASS">
+              <MappingFragment StoreEntitySet="CARPASS">
+                <ScalarProperty Name="dbCreationTime" ColumnName="dbCreationTime" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="plateNo" ColumnName="plateNo" />
+                <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+                <ScalarProperty Name="carPassID" ColumnName="carPassID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ENTRANCE">
+            <EntityTypeMapping TypeName="madoors_Model.ENTRANCE">
+              <MappingFragment StoreEntitySet="ENTRANCE">
+                <ScalarProperty Name="entranceName" ColumnName="entranceName" />
+                <ScalarProperty Name="branchID" ColumnName="branchID" />
+                <ScalarProperty Name="entranceID" ColumnName="entranceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Madoors">
+        <EntityTypeShape EntityType="madoors_Model.BRANCH" Width="1.5" PointX="0.75" PointY="4.375" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="madoors_Model.DEVELOPER" Width="1.5" PointX="0.75" PointY="0.75" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="madoors_Model.LOGIN" Width="1.5" PointX="5.25" PointY="4.375" Height="2.1725878906250031" />
+        <EntityTypeShape EntityType="madoors_Model.TOKEN" Width="1.5" PointX="5.25" PointY="7.25" Height="1.7879850260416745" />
+        <EntityTypeShape EntityType="madoors_Model.CARPASS" Width="1.5" PointX="3.375" PointY="0.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="madoors_Model.ENTRANCE" Width="1.5" PointX="3" PointY="4.125" Height="2.1725878906249996" />
+        <AssociationConnector Association="madoors_Model.FK_ENTRANCE_BRANCH" >
+          <ConnectorPoint PointX="2.25" PointY="5.172841796875" />
+          <ConnectorPoint PointX="3" PointY="5.172841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="madoors_Model.FK_LOGIN_ENTRANCE" >
+          <ConnectorPoint PointX="4.5" PointY="5.4324446614583337" />
+          <ConnectorPoint PointX="5.25" PointY="5.4324446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="madoors_Model.FK_TOKEN_ENTRANCE" >
+          <ConnectorPoint PointX="3.75" PointY="6.4898893229166665" />
+          <ConnectorPoint PointX="3.75" PointY="8.1439925130208373" />
+          <ConnectorPoint PointX="5.25" PointY="8.1439925130208373" />
+        </AssociationConnector>
+        <AssociationConnector Association="madoors_Model.FK_CARPASS_ENTRANCE" >
+          <ConnectorPoint PointX="3.9375" PointY="4.125" />
+          <ConnectorPoint PointX="3.9375" PointY="3.3071907552083331" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
